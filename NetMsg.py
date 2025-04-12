@@ -1,5 +1,6 @@
 import os
 import platform
+import subprocess
 
 os_info = platform.system()
 os_version = platform.version()
@@ -20,18 +21,27 @@ if os_info == "Windows":
         can_send_message = False
     else:
         can_send_message = False
-
 elif os_info == "Linux":
     can_send_message = True
-
 elif os_info == "Darwin":
     can_send_message = True
-
 else:
     can_send_message = False
 
+def get_local_ips():
+    print("\nLocal IPs on your Network:\n")
+    if os_info == "Windows" or os_info == "Darwin":
+        result = subprocess.getoutput("arp -a")
+    elif os_info == "Linux":
+        result = subprocess.getoutput("ip neigh")  
+    else:
+        result = "Unsupported OS for ARP scan."
+    print(result)
+
+get_local_ips()
+
 if can_send_message:
-    ip = str(input("Enter the target's IP (or leave blank for local message): "))
+    ip = str(input("\nEnter the target's IP (or leave blank for local message): "))
     message = str(input("Enter the message you want to send: "))
     loop = input("Do you want a normal loop or infinite loop? (normal/infinite): ")
 
