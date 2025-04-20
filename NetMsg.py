@@ -68,3 +68,5 @@ if can_send_message:
         print("Invalid input. Please enter 'normal' or 'infinite'")
 else:
     print("Your OS does not meet the requirements for sending messages.")
+
+input("\nPress Enter to exit...")
